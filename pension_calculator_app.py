@@ -314,7 +314,7 @@ def main():
                 f"Preferred Arrears (max {int(st.session_state.max_arrears)} months)",
                 min_value=0,
                 max_value=int(st.session_state.max_arrears),
-                value=1,
+                value=0,
                 step=1,
                 key="preferred_arrears"
             )
