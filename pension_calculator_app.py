@@ -137,10 +137,10 @@ def calculate_pension_arrears(frequency, final_arrears_months, final_monthly_pen
         arrears = final_arrears_months * final_monthly_pension
     return arrears
 
-# Load CSV files function
+# Load CSV files function - PRELOADED AT STARTUP
 @st.cache_data
 def load_csv_files():
-    """Load all required CSV files"""
+    """Load all required CSV files at startup"""
     files = {}
     required_files = {
         'Male12': 'Male12.csv',
@@ -150,57 +150,51 @@ def load_csv_files():
         'SalaryStructure': 'SalaryStructure.csv'
     }
     
+    missing_files = []
     for key, filename in required_files.items():
-        try:
-            df = pd.read_csv(filename)
-            if key == 'SalaryStructure':
-                df['Annual Salary'] = df['Annual Salary'].astype(float)
-            files[key] = df
-        except FileNotFoundError:
-            st.error(f"File {filename} not found. Please upload the file.")
-            return None
+        if os.path.exists(filename):
+            try:
+                df = pd.read_csv(filename)
+                if key == 'SalaryStructure':
+                    df['Annual Salary'] = df['Annual Salary'].astype(float)
+                files[key] = df
+            except Exception as e:
+                missing_files.append(f"{filename} (Error: {str(e)})")
+        else:
+            missing_files.append(filename)
     
-    return files
+    if missing_files:
+        return None, missing_files
+    
+    return files, []
+
+# Load CSV files at startup
+csv_data, missing_files = load_csv_files()
 
 # Main Streamlit app
 def main():
     st.title("💰 Pension Calculator")
     st.markdown("---")
     
-    # File upload section
-    st.header("📁 Upload Required Files")
-    
-    uploaded_files = {}
-    file_names = ['Male12.csv', 'Female12.csv', 'Male4.csv', 'Female4.csv', 'SalaryStructure.csv']
-    
-    cols = st.columns(len(file_names))
-    
-    for i, filename in enumerate(file_names):
-        with cols[i]:
-            uploaded_file = st.file_uploader(f"Upload {filename}", type=['csv'], key=filename)
-            if uploaded_file is not None:
-                try:
-                    df = pd.read_csv(uploaded_file)
-                    if filename == 'SalaryStructure.csv':
-                        df['Annual Salary'] = df['Annual Salary'].astype(float)
-                    uploaded_files[filename.replace('.csv', '')] = df
-                    st.success(f"✅ {filename} loaded")
-                except Exception as e:
-                    st.error(f"Error loading {filename}: {str(e)}")
-    
-    # Check if all files are uploaded
-    if len(uploaded_files) != 5:
-        st.warning("Please upload all 5 CSV files to proceed.")
+    # Check if CSV files are loaded
+    if csv_data is None:
+        st.error("❌ Required CSV files are missing or have errors:")
+        for file in missing_files:
+            st.error(f"• {file}")
+        st.info("Please ensure the following CSV files are in the same directory as this app:")
+        st.info("• Male12.csv\n• Female12.csv\n• Male4.csv\n• Female4.csv\n• SalaryStructure.csv")
         return
     
-    # Extract dataframes
-    male12 = uploaded_files['Male12']
-    female12 = uploaded_files['Female12']
-    male4 = uploaded_files['Male4']
-    female4 = uploaded_files['Female4']
-    salarystructure = uploaded_files['SalaryStructure']
+    # Display successful file loading
+    st.success("✅ All required CSV files loaded successfully!")
     
-    st.success("All files loaded successfully!")
+    # Extract dataframes from preloaded data
+    male12 = csv_data['Male12']
+    female12 = csv_data['Female12']
+    male4 = csv_data['Male4']
+    female4 = csv_data['Female4']
+    salarystructure = csv_data['SalaryStructure']
+    
     st.markdown("---")
     
     # User input section
