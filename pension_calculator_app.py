@@ -205,11 +205,11 @@ def main():
     with col1:
         gender = st.selectbox("Gender", ["M", "F"], format_func=lambda x: "Male" if x == "M" else "Female")
         sector = st.selectbox("Sector", ["PU", "PR"], format_func=lambda x: "Public" if x == "PU" else "Private")
-        dob = st.date_input("Date of Birth")
-        retirement_date = st.date_input("Retirement Date")
+        dob = st.date_input("Date of Birth", min_value=datetime(1940, 1, 1).date())
+        retirement_date = st.date_input("Retirement Date", min_value=datetime(1940, 1, 1).date())
     
     with col2:
-        programming_date = st.date_input("Date of Programming", value=datetime.now().date())
+        programming_date = st.date_input("Date of Programming", value=datetime.now().date(), min_value=datetime(1940, 1, 1).date())
         rsa_balance = st.number_input("RSA Balance", min_value=0.0, format="%.2f")
         frequency = st.selectbox("Frequency", [4, 12], format_func=lambda x: "Quarterly" if x == 4 else "Monthly")
     
