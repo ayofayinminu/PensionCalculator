@@ -393,7 +393,7 @@ def main():
                         f"{int(final_arrears_months)} months",
                         f"₦{pension_arrears:,.2f}",
                         f"₦{final_lumpsum + pension_arrears:,.2f}",
-                        f"₦{st.session_state.rsa_balance - final_lumpsum - pension_arrears:,.2f}"
+                        f"₦{st.session_state.rsa_balance - final_lumpsum - pension_arrears - final_monthly_pension:,.2f}"
                     ]
                 }
                 
