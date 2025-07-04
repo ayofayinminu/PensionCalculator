@@ -312,7 +312,7 @@ def main():
         with col1:
             preferred_arrears = st.number_input(
                 f"Preferred Arrears (max {int(st.session_state.max_arrears)} months)",
-                min_value=1,
+                min_value=0,
                 max_value=int(st.session_state.max_arrears),
                 value=1,
                 step=1,
