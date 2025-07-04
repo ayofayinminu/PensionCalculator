@@ -372,7 +372,7 @@ def main():
                 with col2:
                     st.metric("Pension Arrears Amount", f"₦{pension_arrears:,.2f}")
                     st.metric("Total Benefit Payable", f"₦{final_lumpsum + pension_arrears:,.2f}")
-                    st.metric("Annuity Premium", f"₦{st.session_state.rsa_balance - final_lumpsum - pension_arrears:,.2f}")
+                    st.metric("Annuity Premium", f"₦{st.session_state.rsa_balance - final_lumpsum - pension_arrears - final_monthly_pension:,.2f}")
                 
                 # Summary table
                 st.markdown("---")
