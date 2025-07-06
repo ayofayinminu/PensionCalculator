@@ -371,14 +371,6 @@ def main():
     - `salary_structure`: Salary structure (for PU sector post-cutoff)
     - `grade_level`: Grade level (for PU sector post-cutoff)
     - `step`: Step (for PU sector post-cutoff)
-    
-    ### Required CSV Files:
-    Make sure these files are in the same directory as the app:
-    - `Male12.csv`
-    - `Female12.csv`
-    - `Male4.csv`
-    - `Female4.csv`
-    - `SalaryStructure.csv`
     """)
 
 
