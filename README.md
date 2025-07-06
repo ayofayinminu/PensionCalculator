@@ -1,2 +1,2 @@
 # PensionCalculator
-This is a template that generates pension value for retirees
+This is a calculator that generates pension value for retirees.
