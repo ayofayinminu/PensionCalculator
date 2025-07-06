@@ -381,7 +381,7 @@ def main():
         'client_id': ['PEN100000001200', 'PEN100000001201'],
         'date_of_birth': ['15-06-1963', '20-03-1965'],
         'retirement_date': ['15-06-2023', '20-03-2025'],
-        'programming_date': ['01-01-2024', '01-01-2024'],
+        'programming_date': ['01-01-2024', '01-07-2025'],
         'gender': ['M', 'F'],
         'sector': ['PU', 'PR'],
         'frequency': [12, 4],
