@@ -153,9 +153,9 @@ class PensionCalculator:
             # Determine validated salary
             if sector == 'PU' and retirement_date >= self.cutoff_date:
                 # Use salary structure
-                salary_structure = row['salary_structure']
-                grade_level = row['grade_level']
-                step = row['step']
+                salary_structure = str(row['salary_structure']).upper()
+                grade_level = int(row['grade_level'])
+                step = int(row['step'])
                 validated_salary = self.get_annual_salary(salary_structure, grade_level, step)
                 if validated_salary is None:
                     return self.create_error_result(row, "Salary structure not found")
