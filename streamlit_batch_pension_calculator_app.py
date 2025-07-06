@@ -210,7 +210,6 @@ class PensionCalculator:
             annuity_premium = rsa_balance - total_benefit - final_monthly_pension
             
             return {
-                'client_id': row.get('client_id', ''),
                 'status': 'SUCCESS',
                 'error_message': '',
                 'current_age': current_age,
@@ -230,7 +229,6 @@ class PensionCalculator:
     def create_error_result(self, row, error_message):
         """Create error result for failed calculations"""
         return {
-            'client_id': row.get('client_id', ''),
             'status': 'ERROR',
             'error_message': error_message,
             'current_age': None,
@@ -335,8 +333,9 @@ def main():
                     if error_count > 0:
                         st.subheader("❌ Error Details")
                         error_df = results_df[results_df['status'] == 'ERROR']
-                        for _, row in error_df.iterrows():
-                            st.error(f"Client {row['client_id']}: {row['error_message']}")
+                        for index, row in error_df.iterrows():
+                            original_client_id = df.iloc[index]['client_id'] if 'client_id' in df.columns else f"Row {index + 1}"
+                            st.error(f"Client {original_client_id}: {row['error_message']}")
                     
                     # Download button
                     output = io.BytesIO()
