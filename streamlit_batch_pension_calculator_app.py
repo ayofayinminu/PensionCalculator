@@ -357,7 +357,7 @@ def main():
     # Instructions section
     st.header("📋 Instructions")
     st.markdown("""
-    ### Required Excel Columns:
+    ### Required Excel Columns (Cells not applicable should be left empty):
     - `client_id`: Unique identifier for each client
     - `date_of_birth`: Date of birth (format: DD-MM-YYYY)
     - `retirement_date`: Retirement date (format: DD-MM-YYYY)
