@@ -372,6 +372,43 @@ def main():
     - `step`: Step (for PU sector post-cutoff)
     """)
 
+    # Sample template download section
+    st.subheader("📥 Download Sample Template")
+    st.markdown("Download a sample Excel template with the correct column headers:")
+    
+    # Create sample template DataFrame
+    sample_data = {
+        'client_id': ['PEN100000001200', 'PEN100000001201'],
+        'date_of_birth': ['15-06-1963', '20-03-1965'],
+        'retirement_date': ['15-06-2023', '20-03-2025'],
+        'programming_date': ['01-01-2024', '01-01-2024'],
+        'gender': ['M', 'F'],
+        'sector': ['PU', 'PR'],
+        'frequency': [12, 4],
+        'rsa_balance': [5000000, 3500000],
+        'monthly_salary': [250000, 180000],
+        'salary_structure': ['CONHESS', ''],
+        'grade_level': ['07', ''],
+        'step': ['01', '']
+    }
+    
+    sample_df = pd.DataFrame(sample_data)
+    
+    # Create Excel file in memory
+    template_output = io.BytesIO()
+    with pd.ExcelWriter(template_output, engine='openpyxl') as writer:
+        sample_df.to_excel(writer, index=False, sheet_name='Client Data')
+    
+    template_output.seek(0)
+    
+    st.download_button(
+        label="📋 Download Sample Template",
+        data=template_output.getvalue(),
+        file_name="pension_calculator_template.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        help="Download this template, fill in your client data, and upload it for calculation"
+    )
+
 
 if __name__ == "__main__":
     main()
