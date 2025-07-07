@@ -332,7 +332,7 @@ def main():
         fifty_percent_salary = (st.session_state.validated_salary / st.session_state.frequency) * MIN_PENSION_PAYOUT
         regulatory_lumpsum = st.session_state.rsa_balance * 0.25
         max_lumpsum = max(0, (new_adjusted_balance + pv(monthly_rate, nper, fifty_percent_salary, fv=0, when=1)))
-        recommended_lumpsum = round(determine_lumpsum(max_lumpsum, new_adjusted_balance, regulatory_lumpsum), 2)
+        recommended_lumpsum = determine_lumpsum(max_lumpsum, new_adjusted_balance, regulatory_lumpsum)
         
         with col2:
             negotiated_lumpsum = st.number_input(
